@@ -1,9 +1,10 @@
 import { userModel } from "../models/user.model.js";
+import userService from "../services/mongodb/user.service.js";
 
 class UserController {
   async getAllUsers(req, res) {
     try {
-      const users = await userModel.find();
+      const users = await userService.getAllUsers();
       res.json(users);
     } catch (error) {
       res.status(500).json({ error: "Error al obtener los usuarios" });
@@ -30,13 +31,7 @@ class UserController {
     try {
       const { name, age, email } = req.body;
 
-      const user = new userModel({
-        name,
-        age,
-        email,
-      });
-
-      await user.save();
+      const user = await userService.createUser(name, age, email);
 
       res.json(user);
     } catch (error) {
