@@ -23,8 +23,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: new MongStore({
-      mongoUrl:
-        "mongodb+srv://test_admin:test123@curso-nodejs.de1bv.gcp.mongodb.net/ch69960?retryWrites=true&w=majority&appName=curso-nodejs",
+      mongoUrl: "",
       ttl: 10,
     }),
   })
@@ -32,9 +31,7 @@ app.use(
 
 // Mongo config
 mongoose
-  .connect(
-    "mongodb+srv://test_admin:test123@curso-nodejs.de1bv.gcp.mongodb.net/ch69960?retryWrites=true&w=majority&appName=curso-nodejs"
-  )
+  .connect("")
   .then(() => {
     console.log("Conectado a MongoDB");
   })
