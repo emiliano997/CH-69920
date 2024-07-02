@@ -33,8 +33,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-      mongoUrl:
-        "mongodb+srv://test_admin:test123@curso-nodejs.de1bv.gcp.mongodb.net/ch69960?retryWrites=true&w=majority&appName=curso-nodejs",
+      mongoUrl: "",
       ttl: 10,
     }),
   })
