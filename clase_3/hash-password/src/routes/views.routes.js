@@ -33,6 +33,12 @@ router.get("/register", (req, res) => {
   });
 });
 
+router.get("/restore-password", (req, res) => {
+  res.render("restore", {
+    title: "Restauracion de Contraseña",
+  });
+});
+
 router.get("/profile", (req, res) => {
   const isSession = req.session.user ? false : true;
 

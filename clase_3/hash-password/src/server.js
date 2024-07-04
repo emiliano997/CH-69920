@@ -23,15 +23,15 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: new MongStore({
-      mongoUrl: "",
-      ttl: 10,
+      mongoUrl: "mongodb://localhost:27017/ch69920",
+      ttl: 60,
     }),
   })
 );
 
 // Mongo config
 mongoose
-  .connect("")
+  .connect("mongodb://localhost:27017/ch69920")
   .then(() => {
     console.log("Conectado a MongoDB");
   })
