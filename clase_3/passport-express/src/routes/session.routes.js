@@ -1,61 +1,48 @@
 import { Router } from "express";
 import { userModel } from "../models/user.model.js";
+import passport from "passport";
 
 const router = Router();
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+// Login Passport
+router.post(
+  "/login",
+  passport.authenticate("login", {
+    failureRedirect: "/api/sessions/failLogin",
+  }),
+  async (req, res) => {
+    if (!req.user) {
+      return res.status(401).send({ message: "No autorizado" });
+    }
 
-  if (!email || !password) {
-    return res.status(400).json({ error: "Falta el email o la contraseña" });
+    req.session.user = {
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      email: req.user.email,
+      age: req.user.age,
+    };
+
+    res.send({ message: "Sesión iniciada" });
   }
+);
 
-  const user = await userModel.findOne({ email });
-
-  if (!user) {
-    return res.status(404).json({ error: "Usuario no encontrado" });
-  }
-
-  if (user.password !== password) {
-    return res.status(401).json({ error: "Contraseña incorrecta" });
-  }
-
-  // Se  guarda en la colección de usuarios
-  req.session.user = {
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-    age: user.age,
-  };
-
-  res.json({ message: "Sesión iniciada" });
+router.get("/failLogin", (req, res) => {
+  res.status(401).send({ message: "Error al iniciar sesión" });
 });
 
-router.post("/register", async (req, res) => {
-  const { first_name, last_name, email, age, password } = req.body;
-
-  if (!first_name || !last_name || !email || !age || !password) {
-    return res.status(400).json({ error: "Falta información" });
+// Register passport
+router.post(
+  "/register",
+  passport.authenticate("register", {
+    failureRedirect: "/api/sessions/failRegister",
+  }),
+  async (req, res) => {
+    res.status(201).send({ message: "Usuario registrado" });
   }
+);
 
-  // Se  guarda en la colección de usuarios
-  const user = await userModel.create({
-    first_name,
-    last_name,
-    email,
-    age,
-    password,
-  });
-
-  // Se guarda el usuario en la sesión
-  req.session.user = {
-    first_name,
-    last_name,
-    email,
-    age,
-  };
-
-  res.json({ message: "Usuario creado", user });
+router.get("/failRegister", (req, res) => {
+  res.status(401).send({ message: "Error al registrar" });
 });
 
 router.get("/logout", (req, res) => {

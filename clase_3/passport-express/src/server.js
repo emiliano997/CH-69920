@@ -8,6 +8,8 @@ import MongStore from "connect-mongo";
 import path from "path";
 import handlebars from "express-handlebars";
 import __dirname from "./dirname.js";
+import passport from "passport";
+import { initializePassport } from "./config/passport.config.js";
 
 // Create app
 const app = express();
@@ -23,7 +25,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: new MongStore({
-      mongoUrl: "",
+      mongoUrl: "mongodb://localhost:27017/ch69920",
       ttl: 10,
     }),
   })
@@ -31,13 +33,18 @@ app.use(
 
 // Mongo config
 mongoose
-  .connect("")
+  .connect("mongodb://localhost:27017/ch69920")
   .then(() => {
     console.log("Conectado a MongoDB");
   })
   .catch((error) => {
     console.log(error);
   });
+
+// Passport config
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Handlebars config
 app.engine(
