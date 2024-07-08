@@ -1,0 +1,19 @@
+{
+  "name": "expressgithub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.3",
+    "express-session": "^1.18.0",
+    "mongoose": "^8.4.5",
+    "passport-github2": "^0.1.12"
+  }
+}
