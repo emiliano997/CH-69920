@@ -1,10 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-import sessionRoutes from "./routes/session.routes.js";
-import viewsRoutes from "./routes/views.routes.js";
+import sessionRoutes from "./routes/session.router.js";
+import viewsRoutes from "./routes/views.router.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import MongStore from "connect-mongo";
+// import MongStore from "connect-mongo";
 import path from "path";
 import handlebars from "express-handlebars";
 import __dirname from "./dirname.js";
@@ -24,10 +24,6 @@ app.use(
     secret: "s3cr3t",
     resave: false,
     saveUninitialized: false,
-    store: new MongStore({
-      mongoUrl: "mongodb://localhost:27017/ch69920",
-      ttl: 10,
-    }),
   })
 );
 
