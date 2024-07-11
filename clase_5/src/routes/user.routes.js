@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { userModel } from "../models/user.model";
+import { userModel } from "../models/user.model.js";
+import { createHash } from "../utils/hashFunctions.js";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
 
   try {
     // Hashear contraseña
-    const hashPassword = await userModel.createHash(password);
+    const hashPassword = createHash(password);
 
     const user = await userModel.create({
       first_name,
@@ -31,6 +32,7 @@ router.post("/", async (req, res) => {
 
     res.status(201).json(user);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       error: "Error al crear el usuario",
     });

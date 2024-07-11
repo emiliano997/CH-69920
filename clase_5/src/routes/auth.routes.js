@@ -31,10 +31,13 @@ router.post("/login", async (req, res) => {
 
     const token = generateToken({ email: user.email, role: user.role });
 
-    res.status(200).json({
-      message: "Sesión iniciada",
-      token,
-    });
+    res.cookie("currentUser", token, { maxAge: 100000 });
+
+    // res.status(200).json({
+    //   message: "Sesión iniciada",
+    //   token,
+    // });
+    res.redirect("/current");
   } catch (error) {
     res.status(500).json({
       error: "Error al iniciar sesión",

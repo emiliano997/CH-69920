@@ -13,12 +13,10 @@ export const generateToken = (user) => {
 };
 
 export const authToken = (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
+  const token = req.cookies.currentUser;
 
   if (!token) {
-    return res.status(401).json({
-      error: "Falta token",
-    });
+    return res.redirect("/");
   }
 
   try {
