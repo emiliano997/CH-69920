@@ -7,7 +7,11 @@ class UserRouter extends CustomRouter {
   }
 
   getUsers(req, res) {
-    res.json({
+    // res.json({
+    //   message: "Hola mundo",
+    // });
+
+    res.sendSuccess({
       message: "Hola mundo",
     });
   }
