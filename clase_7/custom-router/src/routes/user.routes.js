@@ -3,7 +3,7 @@ import CustomRouter from "./router.js";
 class UserRouter extends CustomRouter {
   init() {
     this.get("/", this.getUsers);
-    this.get("/error", this.getError);
+    this.get("/error", ["USER_PREMIUM"], this.getError);
   }
 
   getUsers(req, res) {
