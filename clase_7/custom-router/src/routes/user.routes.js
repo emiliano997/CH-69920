@@ -1,9 +1,14 @@
 import CustomRouter from "./router.js";
 
+const policies = {
+  PUBLIC: "PUBLIC",
+  USER_PREMIUM: "USER_PREMIUM",
+};
+
 class UserRouter extends CustomRouter {
   init() {
     this.get("/", this.getUsers);
-    this.get("/error", ["USER_PREMIUM"], this.getError);
+    this.get("/error", [policies.USER_PREMIUM], this.getError);
   }
 
   getUsers(req, res) {
