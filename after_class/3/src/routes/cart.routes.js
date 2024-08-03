@@ -141,11 +141,19 @@ router.post("/:id/purchase", async (req, res) => {
     // Validar que la cantidad de productos dentro del carrito sea menor o igual al stock del producto
     const productsWithoutStock = [];
 
-    cart.products.filter((p) => {
+    // cart.products.filter((p) => {
+    //   if (product.stock <= p.quantity) {
+    //     productsWithoutStock.push(p);
+    //   }
+    //   return product.stock <= p.quantity;
+    // });
+
+    cart.products.forEach((p) => {
       if (product.stock <= p.quantity) {
-        productsWithoutStock.push(p);
+        throw new Error(
+          `El producto ${product.name} no tiene stock suficiente`
+        );
       }
-      return product.stock <= p.quantity;
     });
 
     // Descontar stock del producto
