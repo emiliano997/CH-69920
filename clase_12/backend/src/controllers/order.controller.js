@@ -70,6 +70,12 @@ class OrderController {
         productsIds.includes(product.id)
       );
 
+      if (products.length !== productsIds.length) {
+        return res.status(400).json({
+          error: "Falta algun producto",
+        });
+      }
+
       const totalPrice = products.reduce((acc, curr) => acc + curr.price, 0);
 
       const orderNumber = await orderService.getOrderNumber();
@@ -109,7 +115,7 @@ class OrderController {
 
     try {
       if (order.status === "pending") {
-        order.status = resolve ? "completed" : "cancelled";
+        order.status = resolve;
         const updatedOrder = await orderService.update(id, order);
 
         res.status(200).json(updatedOrder);
@@ -126,3 +132,5 @@ class OrderController {
     }
   }
 }
+
+export const orderController = new OrderController();
